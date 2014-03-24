@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Ketcher</title>
         <link rel="stylesheet" type="text/css" href="ketcher.css" />
-        <script type="text/javascript" src="prototype.js"></script>
+        <script type="text/javascript" src="prototype.min.js"></script>
         <script type="text/javascript" src="raphael.js"></script>
         <script type="text/javascript" src="base64.js"></script>
         <script type="text/javascript" src="util/common.js"></script>
@@ -37,9 +37,9 @@
         <script type="text/javascript" src="ketcher.js"></script>
     </head>
 
-    <body onload="ketcher.init();">
+    <body onload="ketcher.init();" style="margin: 0px;">
 
-        <div>
+        <div class="ketcher_root">
             <table id="ketcher_window">
                 <tr align="center" id="main_toolbar">
                     <td style="width:36px"><div style="position:relative"><img class="sideButton modeButton stateButton" id="selector" selid="selector_lasso" src="png/action/lasso.png" alt="" title="Select Tool (Esc)" /><img class="dropdownButton" id="selector_dropdown" src="png/dropdown.png" alt="" /></div></td>
