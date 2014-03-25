@@ -16,7 +16,7 @@ ketcher = function () {
 
 ketcher.version = "1.0b5";
 
-ketcher.init = function (root)
+ketcher.init = function (settings)
 {
   ketcher.templates = {};
 	ketcher.button_areas = {};
@@ -242,7 +242,7 @@ ketcher.init = function (root)
     ketcher.button_areas.rgroup_label = ketcher.showMolfileOpts('rgroup', tmpl.rgroup_label, 75, renderOpts);
 */
 
-    ui.init(root);
+    ui.init(settings);
 };
 
 ketcher.getSmiles = function ()
