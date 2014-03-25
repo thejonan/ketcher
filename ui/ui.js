@@ -158,7 +158,7 @@ ui.init = function (settings)
           'method': method,
           'asynchronous' : async,
           'parameters' : parameters,
-          'onComplete': onready
+          'onComplete': function (res) { onready(res.responseText, res); }
         });
       }
     }
@@ -365,8 +365,8 @@ ui.init = function (settings)
     ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
     ui.base_url = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
 
-    ui.ajaxRequest('knocknock', 'get', false, null, function (res) {
-      if (res.responseText == 'You are welcome!')
+    ui.ajaxRequest('knocknock', 'get', false, null, function (res, xhr) {
+      if (res == 'You are welcome!')
           ui.standalone = false;
     });
 
@@ -529,8 +529,8 @@ ui.selectMode = function (mode)
             onOk: function(mode) {
                 var moldata = new chem.MolfileSaver().saveMolecule(ui.ctab/*.clone()*/, true);
                 ui.ajaxRequest('automap', 'post', true, { moldata : moldata, mode : mode }, function (res) {
-                  if (res.responseText.startsWith('Ok.')) {
-                      ui.updateMolecule(ui.parseCTFile(res.responseText));
+                  if (res.startsWith('Ok.')) {
+                      ui.updateMolecule(ui.parseCTFile(res));
                   }
               });
             }
@@ -1068,22 +1068,22 @@ ui.loadMolecule = function (mol_string, force_layout, check_empty_line, paste)
             return;
         }
         ui.ajaxRequest('layout?smiles=' + encodeURIComponent(smiles), 'get', true, null, function (res) {
-          if (res.responseText.startsWith('Ok.'))
-              updateFunc.call(ui, ui.parseCTFile(res.responseText));
-          else if (res.responseText.startsWith('Error.'))
-              alert(res.responseText.split('\n')[1]);
+          if (res.startsWith('Ok.'))
+              updateFunc.call(ui, ui.parseCTFile(res));
+          else if (res.startsWith('Error.'))
+              alert(res.split('\n')[1]);
           else
-              throw new Error('Something went wrong' + res.responseText);
+              throw new Error('Something went wrong' + res);
         });
     } else if (!ui.standalone && force_layout)
     {
       ui.ajaxRequest('layout', 'post', true, {moldata: mol_string}, function (res) {
-          if (res.responseText.startsWith('Ok.'))
-              updateFunc.call(ui, ui.parseCTFile(res.responseText));
-          else if (res.responseText.startsWith('Error.'))
-              alert(res.responseText.split('\n')[1]);
+          if (res.startsWith('Ok.'))
+              updateFunc.call(ui, ui.parseCTFile(res));
+          else if (res.startsWith('Error.'))
+              alert(res.split('\n')[1]);
           else
-              throw new Error('Something went wrong' + res.responseText);
+              throw new Error('Something went wrong' + res);
       });
     } else {
         updateFunc.call(ui, ui.parseCTFile(mol_string, check_empty_line));
@@ -1100,12 +1100,12 @@ ui.dearomatizeMolecule = function (mol_string, aromatize)
         true, 
         {moldata: mol_string},
         function (res) {
-          if (res.responseText.startsWith('Ok.')) {
-              ui.updateMolecule(ui.parseCTFile(res.responseText));
-          } else if (res.responseText.startsWith('Error.')) {
-              alert(res.responseText.split('\n')[1]);
+          if (res.startsWith('Ok.')) {
+              ui.updateMolecule(ui.parseCTFile(res));
+          } else if (res.startsWith('Error.')) {
+              alert(res.split('\n')[1]);
           } else {
-              throw new Error('Something went wrong' + res.responseText);
+              throw new Error('Something went wrong' + res);
           }
       });
     } else {
