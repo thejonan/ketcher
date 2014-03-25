@@ -16,11 +16,11 @@ ketcher = function () {
 
 ketcher.version = "1.0b5";
 
-ketcher.init = function ()
+ketcher.init = function (root)
 {
-    document.title += ' v' + ketcher.version;
-    ketcher.templates = {};
+  ketcher.templates = {};
 	ketcher.button_areas = {};
+	
 	var elemLabelOpts = {'fontSize':25};
 	ketcher.button_areas.atom_h = new rnd.ElementTable('atom_h', elemLabelOpts).renderSingle('H');
 	ketcher.button_areas.atom_c = new rnd.ElementTable('atom_c', elemLabelOpts).renderSingle('C');
@@ -242,7 +242,7 @@ ketcher.init = function ()
     ketcher.button_areas.rgroup_label = ketcher.showMolfileOpts('rgroup', tmpl.rgroup_label, 75, renderOpts);
 */
 
-    ui.init();
+    ui.init(root);
 };
 
 ketcher.getSmiles = function ()
