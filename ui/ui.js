@@ -855,7 +855,7 @@ ui.onKeyUp = function (event)
     // Esc
     if (event.keyCode == 27)
     {
-        if (this == document || !this.visible())
+        if (this == ui.root || !this.visible())
         {
             if (!$('window_cover').visible())
             {
@@ -888,7 +888,7 @@ ui.onKeyUp = function (event)
         ui.ctrlShortcuts.indexOf(event.which) != -1) && (event.keyCode != 46 && Prototype.Browser.WebKit))
         return;
 
-    if (this != document)
+    if (this != ui.root)
         return;
 
     util.stopEventPropagation(event);
