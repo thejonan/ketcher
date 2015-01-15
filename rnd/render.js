@@ -36,7 +36,7 @@ rnd.logMethod = function () { };
 
 rnd.RenderDummy = function (clientArea, scale, opt, viewSz)
 {
-	this.clientArea = clientArea = $(clientArea);
+	this.clientArea = clientArea = p$(clientArea);
 	clientArea.innerHTML = "";
 	this.paper = new Raphael(clientArea);
 	this.paper.rect(0, 0, 100, 100).attr({
@@ -68,7 +68,7 @@ rnd.Render = function (clientArea, scale, opt, viewSz)
 	this.scale = scale || 100;
 	this.baseScale = this.scale;
 	this.offset = new util.Vec2();
-	this.clientArea = clientArea = $(clientArea);
+	this.clientArea = clientArea = p$(clientArea);
 	clientArea.innerHTML = "";
 	this.paper = new Raphael(clientArea);
 	this.size = new util.Vec2();
@@ -986,8 +986,8 @@ rnd.Render.prototype.update = function (force)
 	var changes = this.ctab.update(force);
     this.setSelection(null); // [MK] redraw the selection bits where necessary
 	var time = (new Date).getTime() - start;
-	if (force && $('log'))
-		$('log').innerHTML = time.toString() + '\n';
+	if (force && p$('log'))
+		p$('log').innerHTML = time.toString() + '\n';
 	if (changes) {
 		var sf = this.settings.scaleFactor;
 		var bb = this.getBoundingBox();

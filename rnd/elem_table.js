@@ -18,7 +18,7 @@ if (!window.rnd)
 rnd.ElementTable = function (clientArea, opts, isTable)
 {
 	opts = opts || {};
-	clientArea = $(clientArea);
+	clientArea = p$(clientArea);
 	clientArea.innerHTML = "";
 	var table = this;
 	this.onClick = opts.onClick || function(elemNum){
@@ -187,6 +187,6 @@ rnd.ElementTable.prototype.restore = function () {
 		}, this);
 		this.selectedLabels = util.Set.clone(this.old.selectedLabels);
 	}
-        $('elem_table_'+this.old.mode).checked=true;
+        p$('elem_table_'+this.old.mode).checked=true;
 	this.updateAtomProps();
 }

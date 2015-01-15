@@ -7,7 +7,7 @@ if (!window.ui)
 
 rnd.ReaGenericsTable = function (clientArea, opts) {
 	opts = opts || {};
-	clientArea = $(clientArea);
+	clientArea = p$(clientArea);
     clientArea.style.width = '610px';
     clientArea.style.height = '390px';
 	clientArea.innerHTML = "";
@@ -190,12 +190,12 @@ rnd.ReaGenericsTable.prototype.setSelection = function(selection) {
     for (var i = 0; i < this.items.length; i++) {
         this.items[i].box.attr('fill', this.items[i].text == selection ? this.fillColorSelected : this.fillColor);
     }
-    $('reagenerics_table_ok').disabled = (!selection || selection == '');
+    p$('reagenerics_table_ok').disabled = (!selection || selection == '');
 };
 
 
 ui.showReaGenericsTable = function(params) {
-    if (!$('reagenerics_table').visible()) {
+    if (!p$('reagenerics_table').visible()) {
         params = params || {};
         ui.showDialog('reagenerics_table');
         if (typeof(ui.reagenerics_table_obj) == 'undefined') {
@@ -221,7 +221,7 @@ ui.showReaGenericsTable = function(params) {
             if ('onCancel' in params) params['onCancel']();
             _onCancel.stop();
         }).start();
-        $($('reagenerics_table_ok').disabled ? 'reagenerics_table_cancel' : 'reagenerics_table_ok').focus();
+        p$($('reagenerics_table_ok').disabled ? 'reagenerics_table_cancel' : 'reagenerics_table_ok').focus();
     }
 };
 

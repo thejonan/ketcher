@@ -18,7 +18,7 @@ if (!window.rnd)
 rnd.RGroupTable = function (clientArea, opts, isTable)
 {
 	opts = opts || {};
-	clientArea = $(clientArea);
+	clientArea = p$(clientArea);
 	clientArea.innerHTML = "";
 	this.onClick = opts.onClick || function(rgi){
         this.setSelection(this.mode == 'single'

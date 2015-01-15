@@ -1087,7 +1087,7 @@
         round = function (num) {
             return +num + (~~num === num) * .5;
         };
-        var $ = function (el, attr) {
+        var p$ = function (el, attr) {
             if (attr) {
                 for (var key in attr) {
                     if (attr[has](key)) {
@@ -1104,7 +1104,7 @@
             return  "Your browser supports SVG.\nYou are running Rapha\xebl " + this.version;
         };
         var thePath = function (pathString, SVG) {
-            var el = $("path");
+            var el = p$("path");
             SVG.canvas && SVG.canvas[appendChild](el);
             var p = new Element(el, SVG);
             p.type = "path";
@@ -1156,19 +1156,19 @@
             id = id.match(/^url\(#(.*)\)$/);
             id && SVG.defs.removeChild(doc.getElementById(id[1]));
 
-            var el = $(type + "Gradient");
+            var el = p$(type + "Gradient");
             el.id = createUUID();
-            $(el, type == "radial" ? {fx: fx, fy: fy} : {x1: vector[0], y1: vector[1], x2: vector[2], y2: vector[3]});
+            p$(el, type == "radial" ? {fx: fx, fy: fy} : {x1: vector[0], y1: vector[1], x2: vector[2], y2: vector[3]});
             SVG.defs[appendChild](el);
             for (var i = 0, ii = dots[length]; i < ii; i++) {
-                var stop = $("stop");
-                $(stop, {
+                var stop = p$("stop");
+                p$(stop, {
                     offset: dots[i].offset ? dots[i].offset : !i ? "0%" : "100%",
                     "stop-color": dots[i].color || "#fff"
                 });
                 el[appendChild](stop);
             }
-            $(o, {
+            p$(o, {
                 fill: "url(#" + el.id + ")",
                 opacity: 1,
                 "fill-opacity": 1
@@ -1180,7 +1180,7 @@
         };
         var updatePosition = function (o) {
             var bbox = o.getBBox();
-            $(o.pattern, {patternTransform: R.format("translate({0},{1})", bbox.x, bbox.y)});
+            p$(o.pattern, {patternTransform: R.format("translate({0},{1})", bbox.x, bbox.y)});
         };
         var setFillAndStroke = function (o, params) {
             var dasharray = {
@@ -1210,7 +1210,7 @@
                         while (i--) {
                             dashes[i] = value[i] * width + ((i % 2) ? 1 : -1) * butt;
                         }
-                        $(node, {"stroke-dasharray": dashes[join](",")});
+                        p$(node, {"stroke-dasharray": dashes[join](",")});
                     }
                 };
             params[has]("rotation") && (rot = params.rotation);
@@ -1241,7 +1241,7 @@
                         case "target":
                             var pn = node.parentNode;
                             if (lowerCase.call(pn.tagName) != "a") {
-                                var hl = $("a");
+                                var hl = p$("a");
                                 pn.insertBefore(hl, node);
                                 hl[appendChild](node);
                                 pn = hl;
@@ -1259,10 +1259,10 @@
                             var rect = Str(value)[split](separator);
                             if (rect[length] == 4) {
                                 o.clip && o.clip.parentNode.parentNode.removeChild(o.clip.parentNode);
-                                var el = $("clipPath"),
-                                    rc = $("rect");
+                                var el = p$("clipPath"),
+                                    rc = p$("rect");
                                 el.id = createUUID();
-                                $(rc, {
+                                p$(rc, {
                                     x: rect[0],
                                     y: rect[1],
                                     width: rect[2],
@@ -1270,19 +1270,19 @@
                                 });
                                 el[appendChild](rc);
                                 o.paper.defs[appendChild](el);
-                                $(node, {"clip-path": "url(#" + el.id + ")"});
+                                p$(node, {"clip-path": "url(#" + el.id + ")"});
                                 o.clip = rc;
                             }
                             if (!value) {
                                 var clip = doc.getElementById(node.getAttribute("clip-path")[rp](/(^url\(#|\)$)/g, E));
                                 clip && clip.parentNode.removeChild(clip);
-                                $(node, {"clip-path": E});
+                                p$(node, {"clip-path": E});
                                 delete o.clip;
                             }
                         break;
                         case "path":
                             if (o.type == "path") {
-                                $(node, {d: value ? attrs.path = pathToAbsolute(value) : "M0,0"});
+                                p$(node, {d: value ? attrs.path = pathToAbsolute(value) : "M0,0"});
                             }
                             break;
                         case "width":
@@ -1329,7 +1329,7 @@
                             break;
                         case "r":
                             if (o.type == "rect") {
-                                $(node, {rx: value, ry: value});
+                                p$(node, {rx: value, ry: value});
                             } else {
                                 node[setAttribute](att, value);
                             }
@@ -1367,19 +1367,19 @@
                         case fillString:
                             var isURL = Str(value).match(ISURL);
                             if (isURL) {
-                                el = $("pattern");
-                                var ig = $("image");
+                                el = p$("pattern");
+                                var ig = p$("image");
                                 el.id = createUUID();
-                                $(el, {x: 0, y: 0, patternUnits: "userSpaceOnUse", height: 1, width: 1});
-                                $(ig, {x: 0, y: 0});
+                                p$(el, {x: 0, y: 0, patternUnits: "userSpaceOnUse", height: 1, width: 1});
+                                p$(ig, {x: 0, y: 0});
                                 ig.setAttributeNS(o.paper.xlink, "href", isURL[1]);
                                 el[appendChild](ig);
  
                                 var img = doc.createElement("img");
                                 img.style.cssText = "position:absolute;left:-9999em;top-9999em";
                                 img.onload = function () {
-                                    $(el, {width: this.offsetWidth, height: this.offsetHeight});
-                                    $(ig, {width: this.offsetWidth, height: this.offsetHeight});
+                                    p$(el, {width: this.offsetWidth, height: this.offsetHeight});
+                                    p$(ig, {width: this.offsetWidth, height: this.offsetHeight});
                                     doc.body.removeChild(this);
                                     o.paper.safari();
                                 };
@@ -1387,7 +1387,7 @@
                                 img.src = isURL[1];
                                 o.paper.defs[appendChild](el);
                                 node.style.fill = "url(#" + el.id + ")";
-                                $(node, {fill: "url(#" + el.id + ")"});
+                                p$(node, {fill: "url(#" + el.id + ")"});
                                 o.pattern = el;
                                 o.pattern && updatePosition(o);
                                 break;
@@ -1398,27 +1398,27 @@
                                 delete attrs.gradient;
                                 !R.is(attrs.opacity, "undefined") &&
                                     R.is(params.opacity, "undefined") &&
-                                    $(node, {opacity: attrs.opacity});
+                                    p$(node, {opacity: attrs.opacity});
                                 !R.is(attrs["fill-opacity"], "undefined") &&
                                     R.is(params["fill-opacity"], "undefined") &&
-                                    $(node, {"fill-opacity": attrs["fill-opacity"]});
+                                    p$(node, {"fill-opacity": attrs["fill-opacity"]});
                             } else if ((({circle: 1, ellipse: 1})[has](o.type) || Str(value).charAt() != "r") && addGradientFill(node, value, o.paper)) {
                                 attrs.gradient = value;
                                 attrs.fill = "none";
                                 break;
                             }
-                            clr[has]("opacity") && $(node, {"fill-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity});
+                            clr[has]("opacity") && p$(node, {"fill-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity});
                         case "stroke":
                             clr = R.getRGB(value);
                             node[setAttribute](att, clr.hex);
-                            att == "stroke" && clr[has]("opacity") && $(node, {"stroke-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity});
+                            att == "stroke" && clr[has]("opacity") && p$(node, {"stroke-opacity": clr.opacity > 1 ? clr.opacity / 100 : clr.opacity});
                             break;
                         case "gradient":
                             (({circle: 1, ellipse: 1})[has](o.type) || Str(value).charAt() != "r") && addGradientFill(node, value, o.paper);
                             break;
                         case "opacity":
                             if (attrs.gradient && !attrs[has]("stroke-opacity")) {
-                                $(node, {"stroke-opacity": value > 1 ? value / 100 : value});
+                                p$(node, {"stroke-opacity": value > 1 ? value / 100 : value});
                             }
                             // fall
                         case "fill-opacity":
@@ -1466,21 +1466,21 @@
                 }
                 var texts = Str(params.text)[split]("\n");
                 for (var i = 0, ii = texts[length]; i < ii; i++) if (texts[i]) {
-                    var tspan = $("tspan");
-                    i && $(tspan, {dy: fontSize * leading, x: a.x});
+                    var tspan = p$("tspan");
+                    i && p$(tspan, {dy: fontSize * leading, x: a.x});
                     tspan[appendChild](doc.createTextNode(texts[i]));
                     node[appendChild](tspan);
                 }
             } else {
                 texts = node.getElementsByTagName("tspan");
                 for (i = 0, ii = texts[length]; i < ii; i++) {
-                    i && $(texts[i], {dy: fontSize * leading, x: a.x});
+                    i && p$(texts[i], {dy: fontSize * leading, x: a.x});
                 }
             }
-            $(node, {y: a.y});
+            p$(node, {y: a.y});
             var bb = el.getBBox(),
                 dif = a.y - (bb.y + bb.height / 2);
-            dif && R.is(dif, "finite") && $(node, {y: a.y + dif});
+            dif && R.is(dif, "finite") && p$(node, {y: a.y + dif});
         },
         Element = function (node, svg) {
             var X = 0,
@@ -1535,12 +1535,12 @@
             cy = cy == null ? bbox.y + bbox.height / 2 : cy;
             if (this._.rt.deg) {
                 this.transformations[0] = R.format("rotate({0} {1} {2})", this._.rt.deg, cx, cy);
-                this.clip && $(this.clip, {transform: R.format("rotate({0} {1} {2})", -this._.rt.deg, cx, cy)});
+                this.clip && p$(this.clip, {transform: R.format("rotate({0} {1} {2})", -this._.rt.deg, cx, cy)});
             } else {
                 this.transformations[0] = E;
-                this.clip && $(this.clip, {transform: E});
+                this.clip && p$(this.clip, {transform: E});
             }
-            $(this.node, {transform: this.transformations[join](S)});
+            p$(this.node, {transform: this.transformations[join](S)});
             return this;
         };
         Element[proto].hide = function () {
@@ -1691,15 +1691,15 @@
             // Experimental. No Safari support. Use it on your own risk.
             var t = this;
             if (+size !== 0) {
-                var fltr = $("filter"),
-                    blur = $("feGaussianBlur");
+                var fltr = p$("filter"),
+                    blur = p$("feGaussianBlur");
                 t.attrs.blur = size;
                 fltr.id = createUUID();
-                $(blur, {stdDeviation: +size || 1.5});
+                p$(blur, {stdDeviation: +size || 1.5});
                 fltr.appendChild(blur);
                 t.paper.defs.appendChild(fltr);
                 t._blur = fltr;
-                $(t.node, {filter: "url(#" + fltr.id + ")"});
+                p$(t.node, {filter: "url(#" + fltr.id + ")"});
             } else {
                 if (t._blur) {
                     t._blur.parentNode.removeChild(t._blur);
@@ -1710,35 +1710,35 @@
             }
         };
         var theCircle = function (svg, x, y, r) {
-            var el = $("circle");
+            var el = p$("circle");
             svg.canvas && svg.canvas[appendChild](el);
             var res = new Element(el, svg);
             res.attrs = {cx: x, cy: y, r: r, fill: "none", stroke: "#000"};
             res.type = "circle";
-            $(el, res.attrs);
+            p$(el, res.attrs);
             return res;
         },
         theRect = function (svg, x, y, w, h, r) {
-            var el = $("rect");
+            var el = p$("rect");
             svg.canvas && svg.canvas[appendChild](el);
             var res = new Element(el, svg);
             res.attrs = {x: x, y: y, width: w, height: h, r: r || 0, rx: r || 0, ry: r || 0, fill: "none", stroke: "#000"};
             res.type = "rect";
-            $(el, res.attrs);
+            p$(el, res.attrs);
             return res;
         },
         theEllipse = function (svg, x, y, rx, ry) {
-            var el = $("ellipse");
+            var el = p$("ellipse");
             svg.canvas && svg.canvas[appendChild](el);
             var res = new Element(el, svg);
             res.attrs = {cx: x, cy: y, rx: rx, ry: ry, fill: "none", stroke: "#000"};
             res.type = "ellipse";
-            $(el, res.attrs);
+            p$(el, res.attrs);
             return res;
         },
         theImage = function (svg, src, x, y, w, h) {
-            var el = $("image");
-            $(el, {x: x, y: y, width: w, height: h, preserveAspectRatio: "none"});
+            var el = p$("image");
+            p$(el, {x: x, y: y, width: w, height: h, preserveAspectRatio: "none"});
             el.setAttributeNS(svg.xlink, "href", src);
             svg.canvas && svg.canvas[appendChild](el);
             var res = new Element(el, svg);
@@ -1747,8 +1747,8 @@
             return res;
         },
         theText = function (svg, x, y, text) {
-            var el = $("text");
-            $(el, {x: x, y: y, "text-anchor": "middle"});
+            var el = p$("text");
+            p$(el, {x: x, y: y, "text-anchor": "middle"});
             svg.canvas && svg.canvas[appendChild](el);
             var res = new Element(el, svg);
             res.attrs = {x: x, y: y, "text-anchor": "middle", text: text, font: availableAttrs.font, stroke: "none", fill: "#000"};
@@ -1773,12 +1773,12 @@
             if (!container) {
                 throw new Error("SVG container not found.");
             }
-            var cnvs = $("svg");
+            var cnvs = p$("svg");
             x = x || 0;
             y = y || 0;
             width = width || 512;
             height = height || 342;
-            $(cnvs, {
+            p$(cnvs, {
                 xmlns: "http://www.w3.org/2000/svg",
                 version: 1.1,
                 width: width,
@@ -1808,9 +1808,9 @@
                 c.removeChild(c.firstChild);
             }
             this.bottom = this.top = null;
-            (this.desc = $("desc"))[appendChild](doc.createTextNode("Created with Rapha\xebl"));
+            (this.desc = p$("desc"))[appendChild](doc.createTextNode("Created with Rapha\xebl"));
             c[appendChild](this.desc);
-            c[appendChild](this.defs = $("defs"));
+            c[appendChild](this.defs = p$("defs"));
         };
         paperproto.remove = function () {
             this.canvas.parentNode && this.canvas.parentNode.removeChild(this.canvas);

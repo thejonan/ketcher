@@ -1076,14 +1076,14 @@ ui.removeDummyAction = function ()
 ui.updateActionButtons = function ()
 {
     if (ui.undoStack.length == 0)
-        $('undo').addClassName('buttonDisabled');
+        p$('undo').addClassName('buttonDisabled');
     else
-        $('undo').removeClassName('buttonDisabled');
+        p$('undo').removeClassName('buttonDisabled');
 
     if (ui.redoStack.length == 0)
-        $('redo').addClassName('buttonDisabled');
+        p$('redo').addClassName('buttonDisabled');
     else
-        $('redo').removeClassName('buttonDisabled');
+        p$('redo').removeClassName('buttonDisabled');
 };
 
 ui.undo = function ()
